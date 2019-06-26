@@ -6,6 +6,9 @@ import json
 with open("credentials.json", encoding='utf-8-sig') as json_file:
     cred = json.load(json_file)
 
+with open("badwords.json", encoding='utf-8-sig') as json_file:
+    bad_words = json.load(json_file);
+
 
 class MyClient(discord.Client):
     # When the bot logs in.
@@ -33,6 +36,34 @@ class MyClient(discord.Client):
             # Infraction verification
             if (words.__len__() == 4 and words[0] == "infraction"):
                 await self.Infraction(words, message);
+            if (words[0] == "say" and words.__len__() > 1):
+                await self.Say(words, message);
+
+    async def Say(self, commandList, message):
+        """
+        This method makes the bot say something.
+        :param commandList:
+        :param message:
+        :return:
+        """
+        # Forming the phrase the user wants the bot to say.
+        phrase = "";
+        for idx, i in enumerate(commandList):
+            if (idx > 0):
+                phrase += i + " "
+            elif (commandList.__len__() == idx):
+                phrase += i;
+
+        for i in phrase.split(" "):
+            for w in bad_words:
+                if (i == w):
+                    print("Bad word! Nonono!");
+                    await message.channel.send("Hey!! :angry:\nDon't make me say bad words!");
+                    return;
+
+        print(str(message.author) + " asked the bot to say ");
+        await message.channel.send(phrase);
+
 
     async def Infraction(self, commandList, message):
         """
