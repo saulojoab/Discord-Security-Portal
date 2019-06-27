@@ -2,6 +2,7 @@
 
 import discord
 import json
+import apiHandler
 
 with open("credentials.json", encoding='utf-8-sig') as json_file:
     cred = json.load(json_file)
@@ -34,10 +35,12 @@ class MyClient(discord.Client):
             words = messageStr.split(" ")
 
             # Infraction verification
-            if (words.__len__() == 4 and words[0] == "infraction"):
+            if (words.__len__() > 3 and words[0] == "infraction"):
                 await self.Infraction(words, message);
             if (words[0] == "say" and words.__len__() > 1):
                 await self.Say(words, message);
+            else:
+                await message.channel.send("Im sorry? I have no idea what you said... :sob:");
 
     async def Say(self, commandList, message):
         """
@@ -54,6 +57,7 @@ class MyClient(discord.Client):
             elif (commandList.__len__() == idx):
                 phrase += i;
 
+        # Checking for bad words.
         for i in phrase.split(" "):
             for w in bad_words:
                 if (i == w):
@@ -61,7 +65,8 @@ class MyClient(discord.Client):
                     await message.channel.send("Hey!! :angry:\nDon't make me say bad words!");
                     return;
 
-        print(str(message.author) + " asked the bot to say ");
+        print(str(message.author) + " asked the bot to say '" + message.content + "'.");
+        # Sending the message.
         await message.channel.send(phrase);
 
 
@@ -73,20 +78,35 @@ class MyClient(discord.Client):
         :return:
         """
         # If someone tries to register an infraction against our bot.
-        if (commandList[2] == "<@593308038476201999>"):
+        if (commandList[1] == "<@593308038476201999>"):
             await message.channel.send("Ha ha ha. You're so silly :stuck_out_tongue:");
             return;
 
         # Loggin info.
         print(str(message.author) + " is registering an Infraction! Details:");
-        print("- Infraction: " + commandList[1]);
-        print("- User: " + commandList[2]);
-        print("- Gravity: " + commandList[3]);
+
+        # Forming the infraction description.
+        infraction = "";
+        for idx, i in enumerate(commandList):
+            if (idx >= 2):
+                infraction += i + " ";
+            if (idx == commandList.__len__()):
+                infraction += i;
+
+        # Logging.
+        print("- Infraction: " + infraction);
+        print("- User: " + commandList[1]);
+        print("- ActionTaken: " + commandList[0]);
+
+        # Loading...
+        await message.channel.send("Ok! :cowboy: lemme handle that for you...");
+        res = apiHandler.addInfraction(commandList[1], infraction, commandList[0]);
+        print(res);
 
         # Logging info to user.
-        await message.channel.send(":robot: Hello, " + str(message.author) + "! Your report has been registered. Details: ");
-        await message.channel.send("- Infraction: " + commandList[1] + "\n- "
-                                   "User: " + commandList[2] + "\n- Gravity: " + commandList[3]);
+        await message.channel.send(":cop: Hey, " + str(message.author) + "! Your report has been registered. Details: ");
+        await message.channel.send("```- Infraction: " + infraction + "\n- "
+                                   "User: " + commandList[1] + "\n- Action Taken: " + commandList[0] + "```");
 
 client = MyClient()
 client.run(str(cred["bottoken"]))
