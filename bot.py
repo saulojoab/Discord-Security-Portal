@@ -10,7 +10,6 @@ with open("credentials.json", encoding='utf-8-sig') as json_file:
 with open("badwords.json", encoding='utf-8-sig') as json_file:
     bad_words = json.load(json_file);
 
-
 class MyClient(discord.Client):
     # When the bot logs in.
     async def on_ready(self):
@@ -39,8 +38,10 @@ class MyClient(discord.Client):
                 await self.Infraction(words, message);
             elif (words.__len__() > 2 and words[0] == "ban"):
                 await self.Ban(words, message);
-            elif (words[0] == "say" and words.__len__() > 1):
+            elif (words.__len__() > 1 and words[0] == "say"):
                 await self.Say(words, message);
+            elif (words.__len__() == 2 and words[0] == "search"):
+                await  self.Search(words[1], message);
             else:
                 await message.channel.send("Im sorry? I have no idea what you said... :sob:");
 
@@ -70,7 +71,6 @@ class MyClient(discord.Client):
         print(str(message.author) + " asked the bot to say '" + message.content + "'.");
         # Sending the message.
         await message.channel.send(phrase);
-
 
     async def Infraction(self, commandList, message):
         """
@@ -138,9 +138,7 @@ class MyClient(discord.Client):
         print("- User: " + commandList[1]);
         print("- ActionTaken: " + commandList[0]);
 
-        string = commandList[1];
-        for i in ['<', '@', '>']:
-            string = string.replace(i, "");
+        string = self.convertUser(commandList[1])
         await message.author.guild.ban(discord.Object(id=string));
 
         # Loading...
@@ -152,8 +150,28 @@ class MyClient(discord.Client):
         await message.channel.send(
             ":cop: Hey, " + str(message.author) + "! Your report has been registered. Details: ");
         await message.channel.send("```- Infraction: " + infraction + "\n- "
-                                                                      "User: " + commandList[1] + "\n- Action Taken: " +
+                                   "User: " + commandList[1] + "\n- Action Taken: " +
                                    commandList[0] + "```");
+
+    async def Search(self, id, message):
+        await message.channel.send("Searching...");
+        infractions = apiHandler.searchInfractions(self.convertUser(id));
+
+        if infractions == []:
+            await message.channel.send(":cop: There are no records about that user. That's probably good.");
+            return;
+
+        await message.channel.send(":cop: Here's what I found about that user:");
+        stringInfractions = ""
+        for i in infractions:
+            stringInfractions += "- INFRACTION: " + i["description"] + "\n- ACTION TAKEN: " + i["actionTaken"] + "\n\n";
+        await message.channel.send("```" + stringInfractions + "```");
+
+    def convertUser(self, user):
+        for i in ['<', '@', '>']:
+            user = user.replace(i, "");
+        return user;
+
 
 client = MyClient()
 client.run(str(cred["bottoken"]))
