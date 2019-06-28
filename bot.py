@@ -107,12 +107,13 @@ class MyClient(discord.Client):
             apiHandler.addInfraction(commandList[1], infraction, commandList[0]);
         except:
             await message.channel.send("Yikes! :sob: Something went wrong... Maybe try again?");
+            await message.channel.send("If that keeps happening, open an issue here: https://github.com/saulojoab/Discord-Security-Portal");
             return;
 
         # Logging info to user.
         await message.channel.send(":cop: Hey, " + str(message.author) + "! Your report has been registered. Details: ");
-        await message.channel.send("```- Infraction: " + infraction + "\n- "
-                                   "User: " + commandList[1] + "\n- Action Taken: " + commandList[0] + "```");
+        await message.channel.send("```- [Infraction]: " + infraction + "\n- "
+                                   "[User]: " + commandList[1] + "\n- [Action Taken]: " + commandList[0] + "```");
 
     async def Ban(self, commandList, message):
         """
@@ -147,14 +148,18 @@ class MyClient(discord.Client):
 
         # Loading...
         await message.channel.send("THE BAN HAMMER HAS BEEN APPLIED! :cowboy: :cop: now lemme make a report for you...");
-        res = apiHandler.addInfraction(commandList[1], infraction, commandList[0]);
-        print(res);
+
+        try:
+            apiHandler.addInfraction(commandList[1], infraction, commandList[0]);
+        except:
+            await message.channel.send("Well, that didn't work... Maybe try again? :thinking:");
+            await message.channel.send("If that keeps happening, open an issue here: https://github.com/saulojoab/Discord-Security-Portal");
 
         # Logging info to user.
         await message.channel.send(
             ":cop: Hey, " + str(message.author) + "! Your report has been registered. Details: ");
-        await message.channel.send("```- Infraction: " + infraction + "\n- "
-                                   "User: " + commandList[1] + "\n- Action Taken: " +
+        await message.channel.send("```- [Infraction]: " + infraction + "\n- "
+                                   "[User]: " + commandList[1] + "\n- [Action Taken]: " +
                                    commandList[0] + "```");
 
     async def Search(self, id, message):
