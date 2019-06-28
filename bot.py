@@ -35,13 +35,31 @@ class MyClient(discord.Client):
 
             # Infraction verification
             if (words.__len__() > 2 and words[0] == "infraction"):
-                await self.Infraction(words, message);
+                if (message.author.guild_permissions.kick_members or message.author.guild_permissions.ban_members):
+                    await self.Infraction(words, message);
+                else:
+                    await message.channel.send("You don't have permissions for that! :cop:");
+            # Ban verification.
             elif (words.__len__() > 2 and words[0] == "ban"):
-                await self.Ban(words, message);
+                if (message.author.guild_permissions.ban_members):
+                    await self.Ban(words, message);
+                else:
+                    await message.channel.send("You don't have permissions for that! :cop:");
+            # Kick verification.
+            elif (words.__len__() > 2 and words[0] == "kick"):
+                if (message.author.guild_permissions.kick_members):
+                    await self.Kick(words, message);
+                else:
+                    await message.channel.send("You don't have permissions for that! :cop:");
+            # Say verification.
             elif (words.__len__() > 1 and words[0] == "say"):
                 await self.Say(words, message);
+            # Search verification.
             elif (words.__len__() == 2 and words[0] == "search"):
-                await  self.Search(words[1], message);
+                if (message.author.guild_permissions.kick_members or message.author.guild_permissions.ban_members):
+                    await self.Search(words[1], message);
+                else:
+                    await message.channel.send("You don't have permissions for that! :cop:");
             else:
                 await message.channel.send("Im sorry? I have no idea what you said... :sob:");
 
@@ -162,7 +180,60 @@ class MyClient(discord.Client):
                                    "[User]: " + commandList[1] + "\n- [Action Taken]: " +
                                    commandList[0] + "```");
 
+    async def Kick(self, commandList, message):
+        """
+        This method handles the kick action.
+        :param commandList:
+        :param message:
+        :return:
+        """
+        # If someone tries to register an infraction against our bot.
+        if (commandList[1] == "<@593308038476201999>"):
+            await message.channel.send("Ha ha ha. You're so silly :stuck_out_tongue:");
+            return;
+
+        # Loggin info.
+        print(str(message.author) + " is banning someone! Details:");
+
+        # Forming the infraction description.
+        infraction = "";
+        for idx, i in enumerate(commandList):
+            if (idx >= 2):
+                infraction += i + " ";
+            if (idx == commandList.__len__()):
+                infraction += i;
+
+        # Logging.
+        print("- Infraction: " + infraction);
+        print("- User: " + commandList[1]);
+        print("- ActionTaken: " + commandList[0]);
+
+        string = self.convertUser(commandList[1])
+        await message.author.guild.kick(discord.Object(id=string));
+
+        # Loading...
+        await message.channel.send("KICK KICK KICK, I'VE KICKED! :cowboy: :cop: now lemme make a report for you...");
+
+        try:
+            apiHandler.addInfraction(commandList[1], infraction, commandList[0]);
+        except:
+            await message.channel.send("Well, that didn't work... Maybe try again? :thinking:");
+            await message.channel.send("If that keeps happening, open an issue here: https://github.com/saulojoab/Discord-Security-Portal");
+
+        # Logging info to user.
+        await message.channel.send(
+            ":cop: Hey, " + str(message.author) + "! Your report has been registered. Details: ");
+        await message.channel.send("```- [Infraction]: " + infraction + "\n- "
+                                   "[User]: " + commandList[1] + "\n- [Action Taken]: " +
+                                   commandList[0] + "```");
+
     async def Search(self, id, message):
+        """
+        This method returns all infraction history from a user.
+        :param id:
+        :param message:
+        :return:
+        """
         await message.channel.send("Searching...");
         infractions = apiHandler.searchInfractions(self.convertUser(id));
 
@@ -172,9 +243,10 @@ class MyClient(discord.Client):
 
         await message.channel.send(":cop: Here's what I found about that user:");
         stringInfractions = ""
-        for i in infractions:
-            stringInfractions += "- INFRACTION: " + i["description"] + "\n- ACTION TAKEN: " + i["actionTaken"] + "\n\n";
+        for idx, i in enumerate(infractions):
+            stringInfractions += str(idx + 1) + ".\n[INFRACTION]: " + i["description"] + "\n[ACTION TAKEN]: " + i["actionTaken"] + "\n\n";
         await message.channel.send("```" + stringInfractions + "```");
+        await message.channel.send(":warning: This user has commited a total of " + str(infractions.__len__()) + " infractions.");
 
     def convertUser(self, user):
         for i in ['<', '@', '>']:

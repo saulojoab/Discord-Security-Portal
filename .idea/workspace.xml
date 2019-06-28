@@ -38,13 +38,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="json" value="52" />
-          <entry key="py" value="5566" />
+          <entry key="py" value="6122" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="52" />
-          <entry key="Python" value="5566" />
+          <entry key="Python" value="6122" />
         </counts>
       </usages-collector>
     </session>
@@ -54,10 +54,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
+            <state relative-caret-position="442">
+              <caret line="56" column="34" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
               <folding>
                 <element signature="e#15#29#0" expanded="true" />
+                <element signature="e#1711#2577#0" />
+                <element signature="e#2641#4121#0" />
+                <element signature="e#4147#5785#0" />
+                <element signature="e#6374#8264#0" />
+                <element signature="e#8418#9344#0" />
+                <element signature="e#6492#6578#0" />
               </folding>
             </state>
           </provider>
@@ -97,6 +103,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>server_permissions</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -110,7 +121,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="782" />
     <option name="y" value="20" />
     <option name="width" value="574" />
@@ -200,8 +211,8 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32903227" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32903227" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32903227" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -222,10 +233,16 @@
     <entry file="file://$PROJECT_DIR$/commandManager.py" />
     <entry file="file://$PROJECT_DIR$/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
+        <state relative-caret-position="442">
+          <caret line="56" column="34" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
           <folding>
             <element signature="e#15#29#0" expanded="true" />
+            <element signature="e#1711#2577#0" />
+            <element signature="e#2641#4121#0" />
+            <element signature="e#4147#5785#0" />
+            <element signature="e#6374#8264#0" />
+            <element signature="e#8418#9344#0" />
+            <element signature="e#6492#6578#0" />
           </folding>
         </state>
       </provider>
