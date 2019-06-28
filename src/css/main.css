@@ -1,0 +1,36 @@
+.menuText{
+    text-align: center;
+    color: rgb(39, 39, 102);
+    font-size: 30px;
+}
+
+.githubLogo{
+    text-align: right;
+}
+
+.menuContainer{
+    background-color: rgb(154, 154, 255);
+}
+
+.searchText{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.userWarning{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.searchBox{
+    height: 40px;
+    text-align: center;
+}
+
+.table{
+    margin-top: 30px;
+}
