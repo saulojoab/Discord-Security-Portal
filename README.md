@@ -11,24 +11,25 @@ You can also check out the <a href="https://github.com/saulojoab/Discord-Securit
 You can join <a href="https://discord.gg/8XxrcSG">this server</a> to test the bot. It's not very rich with a lot of functions but it's easy to use and does the job.
 
 ## Commands:
-### infraction
-`=dsb search @user`
+### search
+`=dsb search @user`<br>
 Searches the server for all infractions that user has commited.
 
 ### infraction
-`=dsb infraction @user reason`
+`=dsb infraction @user reason`<br>
 It reports an infraction from a user and saves it in the server.
 
 ### ban
-`=dsb ban @user reason`
+`=dsb ban @user reason`<br>
 Bans an user then creates an infraction report on the server.
 
 ### kick
-`=dsb kick @user reason`
+`=dsb kick @user reason`<br>
 Kicks an user then creates an infraction report on the server.
 
 ### say
-`=dsb say message`
+`=dsb say message`<br>
 Makes the bot say something.
 
 # Ok, what now? :thinking:
+I might continue developing this service, I made it for studying purpouses <i>(also I really want a cool discord t-shirt and some sticker)</i> so yeah. Feel free to open an <a href="https://github.com/saulojoab/Discord-Security-Portal/issues">Issue</a> if you find anything weird. There might be lots of bugs.
