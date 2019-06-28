@@ -102,8 +102,12 @@ class MyClient(discord.Client):
 
         # Loading...
         await message.channel.send("Ok! :cowboy: lemme handle that for you...");
-        res = apiHandler.addInfraction(commandList[1], infraction, commandList[0]);
-        print(res);
+
+        try:
+            apiHandler.addInfraction(commandList[1], infraction, commandList[0]);
+        except:
+            await message.channel.send("Yikes! :sob: Something went wrong... Maybe try again?");
+            return;
 
         # Logging info to user.
         await message.channel.send(":cop: Hey, " + str(message.author) + "! Your report has been registered. Details: ");
