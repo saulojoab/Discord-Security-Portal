@@ -3,4 +3,5 @@ This project was made for <a href="https://blog.discordapp.com/discord-community
 
 A portal with information on infractions commited by users on Discord's servers. A bot will register those infractions and send them to the portal.
 
-
+You can acess the portal via this link: https://discord-security-portal.herokuapp.com.
+You can also check out the <a href="https://github.com/saulojoab/Discord-Security-Portal/tree/webapp">portal's source code</a> 
