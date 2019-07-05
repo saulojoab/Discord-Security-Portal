@@ -40,7 +40,7 @@ class Main extends Component {
                 {this.state.infractions.length == 0 ? (
                     <Row>
                         <Col className="userWarning">
-                           <Alert>No users where found yet or the user has no infractions.</Alert>
+                           <Alert>No users were found yet or the user has no infractions.</Alert>
                         </Col>
                     </Row>
                 ) : (
